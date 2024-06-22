@@ -1,0 +1,24 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/AlgoCrack"
+    username: postgres
+    password: 32865417
+    driver-class-name: org.postgresql.Driver
+  application:
+    name: api-gate-service
+
+hello:
+  english: Greetings from Spring Boot!
+  chinese: 來自 Spring Boot 的問候！
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+    registerWithEureka: true
+    fetchRegistry: true
+  instance:
+    prefer-ip-address: true

@@ -50,3 +50,8 @@ mvn clean test
 Access the Swagger UI to view and test API endpoints:
 
 [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+
+## Eureka
+The Eureka server is used as a service registration center
+
+[http://localhost:8761](http://localhost:8761)

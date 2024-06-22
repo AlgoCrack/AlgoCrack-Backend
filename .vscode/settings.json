@@ -1,5 +1,5 @@
 {
     "java.configuration.updateBuildConfiguration": "automatic",
-    "java.checkstyle.configuration": "${workspaceFolder}/my-app/checkstyle.xml",
-    "java.compile.nullAnalysis.mode": "automatic"
+    "java.checkstyle.configuration": "${workspaceFolder}/api-gateway-service/checkstyle.xml",
+    "java.compile.nullAnalysis.mode": "automatic",
 }
