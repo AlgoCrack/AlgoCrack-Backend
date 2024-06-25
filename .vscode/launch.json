@@ -6,6 +6,12 @@
     "configurations": [
         {
             "type": "java",
+            "name": "UserService",
+            "request": "launch",
+            "mainClass": "com.userservice"
+        },
+        {
+            "type": "java",
             "name": "EurekaServerApplication",
             "request": "launch",
             "mainClass": "com.tp.EurekaServerApplication",
