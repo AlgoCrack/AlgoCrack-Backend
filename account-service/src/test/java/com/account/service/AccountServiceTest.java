@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.account.vo.HelloRequestVO;
 
 @SpringBootTest
-public class HelloServiceTest {
+public class AccountServiceTest {
 
     @Autowired
     private HelloService helloService;
