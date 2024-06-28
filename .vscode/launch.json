@@ -6,9 +6,9 @@
     "configurations": [
         {
             "type": "java",
-            "name": "UserService",
+            "name": "AccountService",
             "request": "launch",
-            "mainClass": "com.userservice"
+            "mainClass": "com.account.AccountService"
         },
         {
             "type": "java",

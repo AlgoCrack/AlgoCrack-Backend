@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     url: "jdbc:postgresql://localhost:5432/AlgoCrack"
-    username: emberow
+    username: postgres
     password: 32865417
     driver-class-name: org.postgresql.Driver
   application:
