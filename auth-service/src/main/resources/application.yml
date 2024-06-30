@@ -1,0 +1,39 @@
+server:
+  port: 8081
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: YOUR_CLIENT_ID
+            client-secret: YOUR_CLIENT_SECRET
+            scope: profile, email
+            redirect-uri: "{baseUrl}/login/oauth2/code/google"
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/auth
+            token-uri: https://oauth2.googleapis.com/token
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+            user-name-attribute: sub
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/AlgoCrack"
+    username: postgres
+    password: 32865417
+    driver-class-name: org.postgresql.Driver
+  application:
+    name: userservice
+
+hello:
+  english: Greetings from Spring Boot!
+  chinese: 來自 Spring Boot 的問候！
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+    registerWithEureka: true
+    fetchRegistry: true
+  instance:
+    prefer-ip-address: true

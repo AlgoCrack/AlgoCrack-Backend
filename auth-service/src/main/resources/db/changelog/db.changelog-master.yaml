@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: 'auth-service-1'
+      author: Emberow
+      changes:
+        - sqlFile:
+            encoding: utf8
+            path: classpath:db/changelog/sqlfile/20240626_1.sql
+
+  - changeSet:
+      id: 'auth-service-2'
+      author: Emberow
+      changes:
+        - sqlFile:
+            encoding: utf8
+            path: classpath:db/changelog/sqlfile/20240626_2.sql
