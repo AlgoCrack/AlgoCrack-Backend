@@ -54,6 +54,12 @@
 			<version>6.1.8</version>
 		</dependency>
 
+		 <!-- oauth2 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-client</artifactId>
+		</dependency>
+
 		<!-- servelet -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
