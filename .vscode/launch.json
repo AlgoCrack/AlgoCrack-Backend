@@ -6,6 +6,12 @@
     "configurations": [
         {
             "type": "java",
+            "name": "AuthService",
+            "request": "launch",
+            "mainClass": "com.auth.AuthService"
+        },
+        {
+            "type": "java",
             "name": "EurekaServerApplication",
             "request": "launch",
             "mainClass": "com.tp.EurekaServerApplication",
