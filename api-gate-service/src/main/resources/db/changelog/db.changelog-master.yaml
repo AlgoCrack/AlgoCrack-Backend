@@ -1,8 +1,0 @@
-databaseChangeLog:
-- changeSet:
-      id: '1'
-      author: Emberow
-      changes:
-        - sqlFile:
-            encoding: utf8
-            path: classpath:db/changelog/sqlfile/20240610_1.sql
