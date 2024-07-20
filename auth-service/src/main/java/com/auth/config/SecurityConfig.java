@@ -1,8 +1,11 @@
 package com.auth.config;
 
+import java.math.BigInteger;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -17,9 +20,15 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 
+import com.auth.service.AccountService;
+import com.auth.vo.AccountVO;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+  @Autowired
+	AccountService accountService;
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -46,12 +55,19 @@ public class SecurityConfig {
             OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
             OAuth2User oauth2User = delegate.loadUser(userRequest);
 
-            // 获取用户信息
+            // save user info to the DB
             Map<String, Object> attributes = oauth2User.getAttributes();
-            String email = (String) attributes.get("email");
-            String name = (String) attributes.get("name");
+            AccountVO accountVO = AccountVO.builder()
+              .id(new BigInteger((String)attributes.get("sub")))
+              .name((String)attributes.get("name"))
+              .givenName((String)attributes.get("given_name"))
+              .familyName((String)attributes.get("family_name"))
+              .picture((String)attributes.get("picture"))
+              .email((String)attributes.get("email"))
+              .createdDate(new Date())
+              .build();
+            accountService.addAccount(accountVO);
 
-            // 创建新的 OAuth2User 对象，并返回
             return new DefaultOAuth2User(
                     Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")),
                     attributes,
