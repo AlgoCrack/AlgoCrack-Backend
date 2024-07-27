@@ -22,19 +22,6 @@
             "request": "launch",
             "mainClass": "com.tp.EurekaServerApplication",
             "projectName": "eureka-server"
-        },
-        {
-            "type": "java",
-            "name": "Current File",
-            "request": "launch",
-            "mainClass": "${file}"
-        },
-        {
-            "type": "java",
-            "name": "DemoApplication",
-            "request": "launch",
-            "mainClass": "com.example.demo.DemoApplication",
-            "projectName": "demo"
         }
     ]
 }

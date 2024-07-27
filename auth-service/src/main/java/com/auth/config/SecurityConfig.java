@@ -36,7 +36,7 @@ public class SecurityConfig {
         .csrf()
         .disable()
         .authorizeHttpRequests()
-        .requestMatchers("/login", "/").permitAll()  // Allow access to /auth/login and /home
+        .requestMatchers("/auth/userInfo", "/auth/login").permitAll()  // Allow access to /auth/login and /home
         .anyRequest().authenticated()  // Require authentication for any other request
         .and()
         .exceptionHandling()
@@ -44,9 +44,10 @@ public class SecurityConfig {
         .and()
         .oauth2Login()
             .loginPage("/oauth2/authorization/google")  // Use /auth/login for OAuth login
-            .defaultSuccessUrl("/", true)  // Redirect to /home after successful login
+            .defaultSuccessUrl("/auth/userInfo", true)  // Redirect to /userInfo after successful login
             .userInfoEndpoint()
             .userService(oauth2UserService());
+
     return http.build();
   }
 
