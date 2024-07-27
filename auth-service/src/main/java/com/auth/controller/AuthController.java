@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -20,10 +21,13 @@ import jakarta.servlet.http.HttpServletResponse;
 @RequestMapping("/auth")
 public class AuthController {
 
+    @Value("${gateway.host}")
+    private String GATEWAY_SERVICE_URL;
+
     @GetMapping("/login")
     public void googleLogin(HttpServletResponse response) throws IOException {
 
-        response.sendRedirect("/oauth2/authorization/google");
+        response.sendRedirect(GATEWAY_SERVICE_URL + "/oauth2/authorization/google");
 
     }
 
