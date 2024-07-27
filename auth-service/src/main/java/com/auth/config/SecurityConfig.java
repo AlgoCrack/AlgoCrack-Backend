@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -27,26 +28,27 @@ import com.auth.vo.AccountVO;
 @EnableWebSecurity
 public class SecurityConfig {
 
-  @Autowired
-	AccountService accountService;
+    @Autowired
+    AccountService accountService;
 
-  @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http
-        .csrf()
-        .disable()
-        .authorizeHttpRequests()
-        .requestMatchers("/auth/userInfo", "/auth/login").permitAll()  // Allow access to /auth/login and /home
-        .anyRequest().authenticated()  // Require authentication for any other request
-        .and()
-        .exceptionHandling()
-        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.FORBIDDEN))  // Return 403 Forbidden if not authenticated
-        .and()
-        .oauth2Login()
-            .loginPage("/oauth2/authorization/google")  // Use /auth/login for OAuth login
-            .defaultSuccessUrl("/auth/userInfo", true)  // Redirect to /userInfo after successful login
-            .userInfoEndpoint()
-            .userService(oauth2UserService());
+    @Value("${gateway.host}")
+    private String GATEWAY_SERVICE_URL;
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf
+                .disable())
+            .authorizeHttpRequests(requests -> requests
+                .requestMatchers("/auth/userInfo", "/auth/login").permitAll()  // Allow access to /auth/login and /home
+                .anyRequest().authenticated())
+            .exceptionHandling(handling -> handling
+                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.FORBIDDEN)))
+            .oauth2Login(login -> login
+                .loginPage("/oauth2/authorization/google")  // Use /auth/login for OAuth login
+                .defaultSuccessUrl(GATEWAY_SERVICE_URL + "/auth/userInfo", true)  // Redirect to /userInfo after successful login
+                .userInfoEndpoint()
+                .userService(oauth2UserService()));
 
     return http.build();
   }
