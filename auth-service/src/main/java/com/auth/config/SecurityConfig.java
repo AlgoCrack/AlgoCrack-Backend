@@ -24,6 +24,8 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import com.auth.service.AccountService;
 import com.auth.vo.AccountVO;
 
+import jakarta.servlet.http.HttpServletResponse;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -35,7 +37,7 @@ public class SecurityConfig {
     private String GATEWAY_SERVICE_URL;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, HttpServletResponse response) throws Exception {
         http
             .csrf(csrf -> csrf
                 .disable())
@@ -48,12 +50,12 @@ public class SecurityConfig {
                 .loginPage("/oauth2/authorization/google")  // Use /auth/login for OAuth login
                 .defaultSuccessUrl(GATEWAY_SERVICE_URL + "/auth/userInfo", true)  // Redirect to /userInfo after successful login
                 .userInfoEndpoint()
-                .userService(oauth2UserService()));
+                .userService(oauth2UserService(response)));
 
     return http.build();
   }
 
-  private OAuth2UserService<OAuth2UserRequest, OAuth2User> oauth2UserService() {
+  private OAuth2UserService<OAuth2UserRequest, OAuth2User> oauth2UserService(HttpServletResponse response) {
         return userRequest -> {
             OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
             OAuth2User oauth2User = delegate.loadUser(userRequest);
@@ -70,6 +72,11 @@ public class SecurityConfig {
               .createdDate(new Date())
               .build();
             accountService.addAccount(accountVO);
+
+            try {
+                accountService.setJWT(accountVO, response);
+            } catch (Exception e) {
+            }
 
             return new DefaultOAuth2User(
                     Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")),

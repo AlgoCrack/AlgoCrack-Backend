@@ -1,3 +1,6 @@
+gateway:
+  host: http://localhost:8080
+
 spring:
   application:
     # eureka server 上註冊的名稱
@@ -7,6 +10,12 @@ spring:
     username: postgres
     password: 32865417
     driver-class-name: org.postgresql.Driver
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            redirect-uri: http://localhost:8080/login/oauth2/code/google
 
 eureka:
   client:
