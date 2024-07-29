@@ -2,7 +2,7 @@ server:
   port: 8081
 
 gateway:
-  host: http://localhost:8080
+  host: http://localhost:8081
 
 spring:
   application:
@@ -18,7 +18,7 @@ spring:
             scope: 
             - profile
             - email
-            redirect-uri: http://localhost:8080/login/oauth2/code/google
+            redirect-uri: http://localhost:8081/login/oauth2/code/google
       
   datasource:
     url: "jdbc:postgresql://localhost:5432/AlgoCrack"
