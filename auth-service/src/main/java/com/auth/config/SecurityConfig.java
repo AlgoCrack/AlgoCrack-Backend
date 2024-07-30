@@ -72,11 +72,7 @@ public class SecurityConfig {
               .createdDate(new Date())
               .build();
             accountService.addAccount(accountVO);
-
-            try {
-                accountService.setJWT(accountVO, response);
-            } catch (Exception e) {
-            }
+            accountService.setJWT(accountVO, response);
 
             return new DefaultOAuth2User(
                     Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")),

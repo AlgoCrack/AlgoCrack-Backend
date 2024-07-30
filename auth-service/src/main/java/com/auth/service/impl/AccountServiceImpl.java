@@ -1,7 +1,5 @@
 package com.auth.service.impl;
 
-import java.security.KeyPair;
-import java.security.PublicKey;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,31 +21,29 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     AccountMapper accountMapper;
 
+    @Autowired
+    KeyGeneratorUtil keyGeneratorUtil;
+
     @Override
     public void addAccount(AccountVO accountVO) {
         accountMapper.addAccount(accountVO);
     }
 
     @Override
-    public String setJWT(AccountVO accountVO, HttpServletResponse response) throws Exception {
+    public void setJWT(AccountVO accountVO, HttpServletResponse response) {
+        try {
+            String token = JwtUtil.generateToken(keyGeneratorUtil.getPrivateKey(), accountVO.getId());
 
-        KeyPair keyPair = KeyGeneratorUtil.generateKeyPair();
-        String token = JwtUtil.generateToken(keyPair, accountVO.getId());
-        System.out.println("Generated JWT: " + token);
+            // 將 JWT 放到 cookie
+            Cookie cookie = new Cookie("token", token);
+            cookie.setHttpOnly(true);
+            cookie.setSecure(true);
+            cookie.setPath("/");
+            cookie.setMaxAge(86400); // 過期時間為一天
 
-        // 输出公钥用于验证
-        PublicKey publicKey = keyPair.getPublic();
-        System.out.println("Public Key: " + java.util.Base64.getEncoder().encodeToString(publicKey.getEncoded()));
-
-        // 创建 JWT cookie
-        Cookie cookie = new Cookie("token", token);
-        cookie.setHttpOnly(true);
-        cookie.setSecure(true);
-        cookie.setPath("/");
-        cookie.setMaxAge(86400); // 過期時間為一天
-
-        // 将 cookie 添加到响应中
-        response.addCookie(cookie);
-        return null;
+            response.addCookie(cookie);
+        } catch (Exception e) {
+            log.error(e.toString());
+        }
     }
 }

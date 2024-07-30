@@ -8,6 +8,6 @@ public interface AccountService {
 
     void addAccount(AccountVO accountVO);
 
-    String setJWT(AccountVO accountVO, HttpServletResponse response) throws Exception;
+    void setJWT(AccountVO accountVO, HttpServletResponse response);
 }
 
