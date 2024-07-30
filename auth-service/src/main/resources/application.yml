@@ -19,12 +19,15 @@ spring:
             - profile
             - email
             redirect-uri: http://localhost:8081/login/oauth2/code/google
-      
   datasource:
     url: "jdbc:postgresql://localhost:5432/AlgoCrack"
     username: postgres
     password: 32865417
     driver-class-name: org.postgresql.Driver
+  data:
+    redis:
+      host: localhost
+      port: 6379
 
 hello:
   english: Greetings from Spring Boot!
@@ -38,3 +41,4 @@ eureka:
     fetchRegistry: true
   instance:
     prefer-ip-address: true
+
