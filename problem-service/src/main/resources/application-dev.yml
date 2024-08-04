@@ -1,0 +1,21 @@
+spring:
+  application:
+    # eureka server 上註冊的名稱
+    name: problem-service
+  datasource:
+    url: "jdbc:postgresql://postgres:5432/AlgoCrack"
+    username: postgres
+    password: 32865417
+    driver-class-name: org.postgresql.Driver
+  data:
+    redis:
+      host: redis
+      port: 6379
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://eureka-server:8761/eureka}
+    registerWithEureka: true
+    fetchRegistry: true
+  instance:
+    prefer-ip-address: true
