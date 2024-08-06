@@ -6,3 +6,10 @@ databaseChangeLog:
         - sqlFile:
             encoding: utf8
             path: classpath:db/changelog/sqlfile/20240803_1.sql
+  - changeSet:
+      id: 'problem-service-2'
+      author: Emberow
+      changes:
+        - sqlFile:
+            encoding: utf8
+            path: classpath:db/changelog/sqlfile/20240806_1.sql
